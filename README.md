@@ -176,7 +176,7 @@ export default defineConfig({
 - Babel comments
  
 ```tsx
-{/* @class rounded-lg */}
+// @class rounded-lg
 <h1>Hello</h1>
 ```
 
