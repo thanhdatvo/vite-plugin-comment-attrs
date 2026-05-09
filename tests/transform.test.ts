@@ -211,4 +211,91 @@ function App() {
 
     expect(output).toContain('<h1 className="title rounded-lg">Hello</h1>');
   });
+
+  it("supports empty directive value", () => {
+    const input = `
+function App() {
+  return (
+    <div>
+      {/* @alt */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+    const output = transform(input, {
+      directives: {
+        "@alt": { attr: "alt", merge: "replace" },
+      },
+    });
+
+    expect(output).toContain('<img src="/src/assets/react.svg" alt="" />');
+    expect(output).not.toContain("@alt");
+  });
+
+  it("supports empty directive value together with class append", () => {
+    const input = `
+function App() {
+  return (
+    <div>
+      {/* @class button-icon */}
+      {/* @alt */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+    const output = transform(input, {
+      directives: {
+        "@class": { attr: "class", merge: "append" },
+        "@alt": { attr: "alt", merge: "replace" },
+      },
+    });
+
+    expect(output).toContain(
+      '<img src="/src/assets/react.svg" class="button-icon" alt="" />',
+    );
+    expect(output).not.toContain("@class button-icon");
+    expect(output).not.toContain("@alt");
+  });
+  it("does not remove unrelated JSX comments between directive and target element", () => {
+    const input = `
+function App() {
+  return (
+    <div>
+      {/* @class button-icon */}
+      {/* This comment should stay */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+    const output = transform(input);
+
+    expect(output).toContain(
+      '<img src="/src/assets/react.svg" class="button-icon" />',
+    );
+    expect(output).toContain("This comment should stay");
+    expect(output).not.toContain("@class button-icon");
+  });
+
+  it("does not apply unrelated comments as directives", () => {
+    const input = `
+function App() {
+  return (
+    <div>
+      {/* @unknown button-icon */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+    const output = transform(input);
+
+    expect(output).toBeNull();
+  });
 });

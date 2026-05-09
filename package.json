@@ -1,5 +1,5 @@
 {
-  "name": "@thanhdatvo/vite-plugin-comment-attrs",
+  "name": "vite-plugin-comment-attrs",
   "version": "0.0.0",
   "description": "A Vite plugin that turns JSX comments into configurable JSX attributes.",
   "type": "module",
