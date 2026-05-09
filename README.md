@@ -2,11 +2,11 @@
 
 Transform JSX comments into JSX attributes.
 
-### Why use this plugin? 
+## Why use this plugin? 
 
 This plugin is mainly useful for two workflows:
 
-#### 1. Shorten JSX syntax
+### 1. Shorten JSX syntax
 
 Long attribute values can make JSX harder to scan, especially when using utility-first CSS frameworks.
 Instead of writing:
@@ -26,7 +26,7 @@ You can move the long attribute value above the element:
 
 This keeps the JSX element itself smaller and easier to read.
 
-#### 2. Try new attribute values during development
+### 2. Try new attribute values during development
 You can experiment with new attribute values without directly changing the original attribute.
 
 For example:
@@ -45,9 +45,9 @@ This is useful when you want to test new classes, IDs, labels, or other attribut
 
 ---
 
-### Merge strategies
+## Merge strategies
 
-#### Append
+### Append
 Appends to the existing attribute value. 
 
 Input
@@ -63,7 +63,7 @@ Output
 
 This is useful for attributes like `class` where you want to add additional classes without removing existing ones.
 
-#### Replace
+### Replace
 Replaces existing value. Last directive wins.
 
 Input
@@ -81,16 +81,16 @@ Output:
 
 ---
 
-### Usage 
+## Usage 
 
-#### Install
+### Install
 
 ```bash
 npm install -D vite-plugin-comment-attrs
 ```
 
 
-#### Configuration
+### Configuration
 
 ```tsx
 commentAttrsPlugin({
@@ -121,7 +121,7 @@ plugins: [
 ]
 ```
 
-##### ReactJS example
+#### ReactJS example
 
 ```ts
 
@@ -143,7 +143,7 @@ export default defineConfig({
 });
 ```
 
-##### SolidJS example
+#### SolidJS example
 
 ```ts
 import { defineConfig } from "vite";
@@ -165,8 +165,8 @@ export default defineConfig({
 ```
 ---
 
-### Notes
-#### Supported file types
+## Notes
+### 1. Supported file types
 - This plugin only processes JSX/TSX/JS/TS files.
 - Use JSX comments:
 ```tsx
@@ -180,13 +180,13 @@ export default defineConfig({
 <h1>Hello</h1>
 ```
 
-#### Framework-specific attribute mappings
+### 2. Framework-specific attribute mappings
 - SolidJS uses `class`, so map `@class` to `class`.
 - ReactJS uses `className`, so map `@class` to `className`.
 
 ---
 
-### Contributing
+## Contributing
 Contributions are welcome!
 If you find a bug, have an idea, or want to improve the plugin,
 feel free to open an issue or submit a pull request.
@@ -204,15 +204,15 @@ bun run test
 
 ---
 
-### Author
+## Author
 Created by Thanh Dat Vo
 
-### AI usage disclosure
+## AI usage disclosure
 AI tools was used as a part of the development process for this project.
 It helped with implementation, documentation, and testing.
 The final design decisions, validation, and publishing responsibility remain with the maintainer.
 I believe the usefulness and impact of the project matter more than the specific tools used in its creation.
 
 
-### License
+## License
 MIT © 2026 Thanh Dat Vo
