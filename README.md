@@ -166,7 +166,7 @@ export default defineConfig({
 ---
 
 ## Notes
-### Supported file types
+### 1. Supported file types
 - This plugin only processes JSX/TSX/JS/TS files.
 - Use JSX comments:
 ```tsx
@@ -180,7 +180,7 @@ export default defineConfig({
 <h1>Hello</h1>
 ```
 
-### Framework-specific attribute mappings
+### 2. Framework-specific attribute mappings
 - SolidJS uses `class`, so map `@class` to `class`.
 - ReactJS uses `className`, so map `@class` to `className`.
 
