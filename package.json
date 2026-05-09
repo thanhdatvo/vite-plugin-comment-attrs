@@ -1,0 +1,64 @@
+{
+  "name": "@thanhdatvo/vite-plugin-comment-attrs",
+  "version": "0.0.0",
+  "description": "A Vite plugin that turns JSX comments into configurable JSX attributes.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Thanh Dat Vo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thanhdatvo/vite-plugin-comment-attrs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thanhdatvo/vite-plugin-comment-attrs/issues"
+  },
+  "homepage": "https://github.com/thanhdatvo/vite-plugin-comment-attrs#readme",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "jsx",
+    "solidjs",
+    "react",
+    "babel",
+    "tailwind"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "bun run test && bun run build",
+    "pack:check": "npm pack --dry-run",
+    "dev:react": "bun --cwd examples/react dev",
+    "dev:solid": "bun --cwd examples/solid dev"
+  },
+  "peerDependencies": {
+    "vite": ">=5"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.29.1",
+    "@babel/parser": "^7.29.3",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0"
+  },
+  "devDependencies": {
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.11",
+    "vitest": "^4.1.5"
+  }
+}

@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+coverage/
+
+# Test output
+.vitest/
+.nyc_output/
+
+# Vite cache
+.vite/
+node_modules/.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# Package manager cache
+.pnpm-store/
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# npm package tarballs
+*.tgz
+
+# Example app outputs
+examples/**/dist/
+examples/**/build/
+examples/**/node_modules/
+examples/**/.vite/
+examples/**/*.tsbuildinfo
