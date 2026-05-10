@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const localPluginPath = path.resolve(__dirname, "../../src/index.ts");
-const useLocalPlugin = existsSync(localPluginPath);
+
+const isStackBlitz = process.env.STACKBLITZ === "true";
 
 function logPlugin(message: string) {
   const time = new Intl.DateTimeFormat("en-US", {
@@ -22,18 +22,15 @@ function logPlugin(message: string) {
 }
 
 export default defineConfig(async () => {
-  const pluginImportPath = useLocalPlugin
-    ? pathToFileURL(localPluginPath).href
-    : "vite-plugin-comment-attrs";
-
-  const pluginModule = await import(/* @vite-ignore */ pluginImportPath);
+  const pluginModule = isStackBlitz
+    ? await import("vite-plugin-comment-attrs")
+    : await import("../../src/index");
 
   logPlugin(
-    `using ${useLocalPlugin ? "local source" : "npm package"}: ${
-      useLocalPlugin ? localPluginPath : "vite-plugin-comment-attrs"
+    `using ${isStackBlitz ? "npm package" : "local source"}: ${
+      isStackBlitz ? "vite-plugin-comment-attrs" : localPluginPath
     }`,
   );
-
   return {
     plugins: [
       pluginModule.commentAttrsPlugin({
