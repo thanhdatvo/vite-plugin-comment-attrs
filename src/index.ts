@@ -103,7 +103,12 @@ function parseDirectiveText(
 
   for (const [directive, rule] of Object.entries(directives)) {
     const escapedDirective = escapeRegExp(directive);
-    const match = trimmed.match(new RegExp(`^${escapedDirective}\\s+(.+)$`));
+
+    // const match = trimmed.match(new RegExp(`^${escapedDirective}\\s+(.+)$`));
+    // this support directive without value
+    const match = trimmed.match(
+      new RegExp(`^${escapedDirective}(?:\\s+(.+))?$`),
+    );
 
     if (!match) {
       continue;
@@ -113,7 +118,7 @@ function parseDirectiveText(
       directive,
       attrName: rule.attr,
       merge: rule.merge,
-      value: match[1].trim(),
+      value: match[1]?.trim() ?? "",
     };
   }
 
@@ -211,7 +216,11 @@ function applyAttributes(
     setOrMergeAttribute(openingElement, attrName, value, collected.merge);
   }
 }
-
+function isJsxCommentOnlyExpression(node: t.Node): boolean {
+  return (
+    t.isJSXExpressionContainer(node) && t.isJSXEmptyExpression(node.expression)
+  );
+}
 function processJsxChildren(
   children: t.JSXElement["children"],
   directives: DirectiveConfig,
@@ -243,6 +252,13 @@ function processJsxChildren(
       if (nextDirective) {
         addCollectedAttr(attrs, nextDirective);
         removeIndexes.push(j);
+        j++;
+        continue;
+      }
+
+      // Skip unrelated JSX comments between directives and the target element.
+      // for example @alt and @class
+      if (isJsxCommentOnlyExpression(child)) {
         j++;
         continue;
       }

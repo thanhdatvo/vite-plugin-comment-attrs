@@ -30,8 +30,9 @@ function transform(
 }
 
 describe("commentAttrsPlugin", () => {
-  it("adds a class attribute from a JSX comment", () => {
-    const input = `
+  describe("class directive", () => {
+    it("adds a class attribute from a JSX comment", () => {
+      const input = `
 function App() {
   return (
     <div>
@@ -42,14 +43,14 @@ function App() {
 }
 `;
 
-    const output = transform(input);
+      const output = transform(input);
 
-    expect(output).toContain('<h1 class="rounded-lg bg-blue-500">Hello</h1>');
-    expect(output).not.toContain("@class rounded-lg bg-blue-500");
-  });
+      expect(output).toContain('<h1 class="rounded-lg bg-blue-500">Hello</h1>');
+      expect(output).not.toContain("@class rounded-lg bg-blue-500");
+    });
 
-  it("appends multiple class comments", () => {
-    const input = `
+    it("appends multiple class comments", () => {
+      const input = `
 function App() {
   return (
     <div>
@@ -61,15 +62,15 @@ function App() {
 }
 `;
 
-    const output = transform(input);
+      const output = transform(input);
 
-    expect(output).toContain(
-      '<h1 class="rounded-lg bg-blue-500 px-4 py-2 text-white">Hello</h1>',
-    );
-  });
+      expect(output).toContain(
+        '<h1 class="rounded-lg bg-blue-500 px-4 py-2 text-white">Hello</h1>',
+      );
+    });
 
-  it("appends to an existing class attribute", () => {
-    const input = `
+    it("appends to an existing class attribute", () => {
+      const input = `
 function App() {
   return (
     <div>
@@ -80,13 +81,15 @@ function App() {
 }
 `;
 
-    const output = transform(input);
+      const output = transform(input);
 
-    expect(output).toContain('<h1 class="title rounded-lg">Hello</h1>');
+      expect(output).toContain('<h1 class="title rounded-lg">Hello</h1>');
+    });
   });
 
-  it("supports replace strategy for id", () => {
-    const input = `
+  describe("custom directives", () => {
+    it("supports replace strategy for id", () => {
+      const input = `
 function App() {
   return (
     <div>
@@ -98,19 +101,19 @@ function App() {
 }
 `;
 
-    const output = transform(input, {
-      directives: {
-        "@id": { attr: "id", merge: "replace" },
-      },
+      const output = transform(input, {
+        directives: {
+          "@id": { attr: "id", merge: "replace" },
+        },
+      });
+
+      expect(output).toContain('<h1 id="final-id">Hello</h1>');
+      expect(output).not.toContain("old-id");
+      expect(output).not.toContain("first-id");
     });
 
-    expect(output).toContain('<h1 id="final-id">Hello</h1>');
-    expect(output).not.toContain("old-id");
-    expect(output).not.toContain("first-id");
-  });
-
-  it("supports multiple configured directives", () => {
-    const input = `
+    it("supports multiple configured directives", () => {
+      const input = `
 function App() {
   return (
     <div>
@@ -123,76 +126,21 @@ function App() {
 }
 `;
 
-    const output = transform(input, {
-      directives: {
-        "@class": { attr: "class", merge: "append" },
-        "@id": { attr: "id", merge: "replace" },
-        "@title": { attr: "title", merge: "replace" },
-      },
+      const output = transform(input, {
+        directives: {
+          "@class": { attr: "class", merge: "append" },
+          "@id": { attr: "id", merge: "replace" },
+          "@title": { attr: "title", merge: "replace" },
+        },
+      });
+
+      expect(output).toContain(
+        '<h1 class="rounded-lg" id="title" title="Greeting">Hello</h1>',
+      );
     });
 
-    expect(output).toContain(
-      '<h1 class="rounded-lg" id="title" title="Greeting">Hello</h1>',
-    );
-  });
-
-  it("works inside JSX fragments", () => {
-    const input = `
-function App() {
-  return (
-    <>
-      {/* @class text-white */}
-      <h1>Hello</h1>
-    </>
-  );
-}
-`;
-
-    const output = transform(input);
-
-    expect(output).toContain('<h1 class="text-white">Hello</h1>');
-  });
-
-  it("supports line comments attached as leading comments", () => {
-    const input = `
-function App() {
-  return (
-    // @class text-white
-    <h1>Hello</h1>
-  );
-}
-`;
-
-    const output = transform(input);
-
-    expect(output).toContain('<h1 class="text-white">Hello</h1>');
-  });
-
-  it("returns null when no directive exists", () => {
-    const input = `
-function App() {
-  return <h1>Hello</h1>;
-}
-`;
-
-    const output = transform(input);
-
-    expect(output).toBeNull();
-  });
-
-  it("returns null for non-target files", () => {
-    const input = `
-/* @class text-white */
-body {}
-`;
-
-    const output = transform(input, {}, "/src/style.css");
-
-    expect(output).toBeNull();
-  });
-
-  it("supports React className via config", () => {
-    const input = `
+    it("supports React className via config", () => {
+      const input = `
 function App() {
   return (
     <div>
@@ -203,12 +151,162 @@ function App() {
 }
 `;
 
-    const output = transform(input, {
-      directives: {
-        "@class": { attr: "className", merge: "append" },
-      },
+      const output = transform(input, {
+        directives: {
+          "@class": { attr: "className", merge: "append" },
+        },
+      });
+
+      expect(output).toContain('<h1 className="title rounded-lg">Hello</h1>');
+    });
+  });
+
+  describe("comment placement", () => {
+    it("works inside JSX fragments", () => {
+      const input = `
+function App() {
+  return (
+    <>
+      {/* @class text-white */}
+      <h1>Hello</h1>
+    </>
+  );
+}
+`;
+
+      const output = transform(input);
+
+      expect(output).toContain('<h1 class="text-white">Hello</h1>');
     });
 
-    expect(output).toContain('<h1 className="title rounded-lg">Hello</h1>');
+    it("supports line comments attached as leading comments", () => {
+      const input = `
+function App() {
+  return (
+    // @class text-white
+    <h1>Hello</h1>
+  );
+}
+`;
+
+      const output = transform(input);
+
+      expect(output).toContain('<h1 class="text-white">Hello</h1>');
+    });
+  });
+
+  describe("empty directive values", () => {
+    it("supports empty directive value", () => {
+      const input = `
+function App() {
+  return (
+    <div>
+      {/* @alt */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+      const output = transform(input, {
+        directives: {
+          "@alt": { attr: "alt", merge: "replace" },
+        },
+      });
+
+      expect(output).toContain('<img src="/src/assets/react.svg" alt="" />');
+      expect(output).not.toContain("@alt");
+    });
+
+    it("supports empty directive value together with class append", () => {
+      const input = `
+function App() {
+  return (
+    <div>
+      {/* @class button-icon */}
+      {/* @alt */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+      const output = transform(input, {
+        directives: {
+          "@class": { attr: "class", merge: "append" },
+          "@alt": { attr: "alt", merge: "replace" },
+        },
+      });
+
+      expect(output).toContain(
+        '<img src="/src/assets/react.svg" class="button-icon" alt="" />',
+      );
+      expect(output).not.toContain("@class button-icon");
+      expect(output).not.toContain("@alt");
+    });
+  });
+
+  describe("ignored files and comments", () => {
+    it("returns null when no directive exists", () => {
+      const input = `
+function App() {
+  return <h1>Hello</h1>;
+}
+`;
+
+      const output = transform(input);
+
+      expect(output).toBeNull();
+    });
+
+    it("returns null for non-target files", () => {
+      const input = `
+/* @class text-white */
+body {}
+`;
+
+      const output = transform(input, {}, "/src/style.css");
+
+      expect(output).toBeNull();
+    });
+
+    it("does not apply unrelated comments as directives", () => {
+      const input = `
+function App() {
+  return (
+    <div>
+      {/* @unknown button-icon */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+      const output = transform(input);
+
+      expect(output).toBeNull();
+    });
+
+    it("does not remove unrelated JSX comments between directive and target element", () => {
+      const input = `
+function App() {
+  return (
+    <div>
+      {/* @class button-icon */}
+      {/* This comment should stay */}
+      <img src="/src/assets/react.svg" />
+    </div>
+  );
+}
+`;
+
+      const output = transform(input);
+
+      expect(output).toContain(
+        '<img src="/src/assets/react.svg" class="button-icon" />',
+      );
+      expect(output).toContain("This comment should stay");
+      expect(output).not.toContain("@class button-icon");
+    });
   });
 });

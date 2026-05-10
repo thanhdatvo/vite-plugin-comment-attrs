@@ -66,8 +66,8 @@ function App() {
 
             <li>
               <a href="https://solidjs.com/" target="_blank">
-                {/* @alt */}
                 {/* @class button-icon */}
+                {/* @alt */}
                 <img src={solidLogo} />
                 learn more
               </a>
