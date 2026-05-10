@@ -81,12 +81,8 @@ Replaces existing value. Last directive wins.
 Input
 
 ```tsx
-{
-  /* @id first */
-}
-{
-  /* @id final */
-}
+{/* @id first */}
+{/* @id final */}
 <h1 id="old">Hello</h1>;
 ```
 
