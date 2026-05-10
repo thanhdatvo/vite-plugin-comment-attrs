@@ -1,6 +1,6 @@
 {
   "installDependencies": true,
-  "startCommand": "bun dev",
+  "startCommand": "npm run dev",
   "env": {
     "STACKBLITZ": "true"
   }

@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const localPluginPath = path.resolve(__dirname, "../../src/index.ts");
@@ -22,9 +22,11 @@ function logPlugin(message: string) {
 }
 
 export default defineConfig(async () => {
-  const pluginModule = isStackBlitz
-    ? await import("vite-plugin-comment-attrs")
-    : await import("../../src/index");
+  const pluginImportPath = isStackBlitz
+    ? "vite-plugin-comment-attrs"
+    : pathToFileURL(localPluginPath).href;
+
+  const pluginModule = await import(/* @vite-ignore */ pluginImportPath);
 
   logPlugin(
     `using ${isStackBlitz ? "npm package" : "local source"}: ${
