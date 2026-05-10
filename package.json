@@ -17,9 +17,11 @@
     "vite",
     "vite-plugin",
     "jsx",
+    "tsx",
     "solidjs",
     "react",
     "babel",
+    "attributes",
     "tailwind"
   ],
   "files": [

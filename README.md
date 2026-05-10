@@ -199,7 +199,8 @@ cd vite-plugin-comment-attrs
 - Install dependencies and test
 ```sh
 bun install
-bun run test
+bun test
+bun run build
 ```
 
 ---
