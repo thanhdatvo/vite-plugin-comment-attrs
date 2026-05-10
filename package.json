@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-comment-attrs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A Vite plugin that turns JSX comments into configurable JSX attributes.",
   "type": "module",
   "license": "MIT",
