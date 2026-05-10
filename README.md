@@ -18,12 +18,8 @@ Instead of writing:
 You can move the long attribute value above the element:
 
 ```tsx
-{
-  /* @class rounded-lg bg-blue-500 */
-}
-{
-  /* @class px-4 py-2 text-white */
-}
+{/* @class rounded-lg bg-blue-500 */}
+{/* @class px-4 py-2 text-white */}
 <h1>Hello Mom</h1>;
 ```
 
@@ -36,9 +32,7 @@ You can experiment with new attribute values without directly changing the origi
 For example:
 
 ```tsx
-{
-  /* @class rounded-lg bg-blue-500 */
-}
+{/* @class rounded-lg bg-blue-500 */}
 <h1 class="title">Hello Mom</h1>;
 ```
 
@@ -68,9 +62,7 @@ Appends to the existing attribute value.
 Input
 
 ```tsx
-{
-  /* @class rounded-lg */
-}
+{/* @class rounded-lg */}
 <h1 class="title">Hello</h1>;
 ```
 
@@ -193,9 +185,7 @@ export default defineConfig({
 - Use JSX comments:
 
 ```tsx
-{
-  /* @class rounded-lg */
-}
+{/* @class rounded-lg */}
 <h1>Hello</h1>;
 ```
 
