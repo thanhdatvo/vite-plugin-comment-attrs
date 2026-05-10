@@ -12,17 +12,19 @@ Long attribute values can make JSX harder to scan, especially when using utility
 Instead of writing:
 
 ```tsx
-<h1 class="rounded-lg bg-blue-500 px-4 py-2 text-white">
-  Hello Mom
-</h1>
+<h1 class="rounded-lg bg-blue-500 px-4 py-2 text-white">Hello Mom</h1>
 ```
 
 You can move the long attribute value above the element:
 
 ```tsx
-{/* @class rounded-lg bg-blue-500 */}
-{/* @class px-4 py-2 text-white */}
-<h1>Hello Mom</h1>
+{
+  /* @class rounded-lg bg-blue-500 */
+}
+{
+  /* @class px-4 py-2 text-white */
+}
+<h1>Hello Mom</h1>;
 ```
 
 This keeps the JSX element itself smaller and easier to read.
@@ -34,8 +36,10 @@ You can experiment with new attribute values without directly changing the origi
 For example:
 
 ```tsx
-{/* @class rounded-lg bg-blue-500 */}
-<h1 class="title">Hello Mom</h1>
+{
+  /* @class rounded-lg bg-blue-500 */
+}
+<h1 class="title">Hello Mom</h1>;
 ```
 
 Output:
@@ -48,6 +52,13 @@ This is useful when you want to test new classes, IDs, labels, or other attribut
 
 ---
 
+## Try it online
+
+- <a href="https://stackblitz.com/github/thanhdatvo/vite-plugin-comment-attrs/tree/main/examples/react" target="_blank" rel="noopener noreferrer">React playground</a>
+- <a href="https://stackblitz.com/github/thanhdatvo/vite-plugin-comment-attrs/tree/main/examples/solid" target="_blank" rel="noopener noreferrer">Solid playground</a>
+
+---
+
 ## Merge strategies
 
 ### Append
@@ -57,8 +68,10 @@ Appends to the existing attribute value.
 Input
 
 ```tsx
-{/* @class rounded-lg */}
-<h1 class="title">Hello</h1>
+{
+  /* @class rounded-lg */
+}
+<h1 class="title">Hello</h1>;
 ```
 
 Output
@@ -76,9 +89,13 @@ Replaces existing value. Last directive wins.
 Input
 
 ```tsx
-{/* @id first */}
-{/* @id final */}
-<h1 id="old">Hello</h1>
+{
+  /* @id first */
+}
+{
+  /* @id final */
+}
+<h1 id="old">Hello</h1>;
 ```
 
 Output:
@@ -117,23 +134,16 @@ Place `commentAttrsPlugin` before the framework plugin (e.g., `react()` or `soli
 allows the comment attributes to be transformed before JSX being processed.
 
 ```tsx
-plugins: [
-  commentAttrsPlugin(),
-  solid(),
-]
+plugins: [commentAttrsPlugin(), solid()];
 ```
 
 ```tsx
-plugins: [
-  commentAttrsPlugin(),
-  react(),
-]
+plugins: [commentAttrsPlugin(), react()];
 ```
 
 #### ReactJS example
 
 ```ts
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { commentAttrsPlugin } from "vite-plugin-comment-attrs";
@@ -165,11 +175,11 @@ export default defineConfig({
       directives: {
         "@class": { attr: "class", merge: "append" },
         "@id": { attr: "id", merge: "replace" },
-        "@alt": { attr: "alt", merge: "replace" }
-      }
+        "@alt": { attr: "alt", merge: "replace" },
+      },
     }),
-    solid()
-  ]
+    solid(),
+  ],
 });
 ```
 
@@ -183,8 +193,10 @@ export default defineConfig({
 - Use JSX comments:
 
 ```tsx
-{/* @class rounded-lg */}
-<h1>Hello</h1>
+{
+  /* @class rounded-lg */
+}
+<h1>Hello</h1>;
 ```
 
 - Babel comments
@@ -198,6 +210,29 @@ export default defineConfig({
 
 - SolidJS uses `class`, so map `@class` to `class`.
 - ReactJS uses `className`, so map `@class` to `className`.
+
+---
+
+## Contributing
+
+Contributions are welcome!
+If you find a bug, have an idea, or want to improve the plugin,
+feel free to open an issue or submit a pull request.
+
+- Clone the repository
+
+```sh
+git clone https://github.com/thanhdatvo/vite-plugin-comment-attrs.git
+cd vite-plugin-comment-attrs
+```
+
+- Install dependencies, run test and build the package
+
+```sh
+bun install
+bun test
+bun run build
+```
 
 ---
 

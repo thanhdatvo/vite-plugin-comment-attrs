@@ -44,7 +44,9 @@
     "prepublishOnly": "bun run test && bun run build",
     "pack:check": "npm pack --dry-run",
     "dev:react": "bun --cwd examples/react dev",
-    "dev:solid": "bun --cwd examples/solid dev"
+    "install:react": "bun link && cd examples/react && bun link vite-plugin-comment-attrs && bun install ",
+    "dev:solid": "bun --cwd examples/solid dev",
+    "install:solid": "bun link && cd examples/solid && bun link vite-plugin-comment-attrs && bun install "
   },
   "peerDependencies": {
     "vite": ">=5"

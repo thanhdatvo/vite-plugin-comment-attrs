@@ -13,14 +13,37 @@ cd vite-plugin-comment-attrs
 
 ### Development
 
+Follow these steps
+
 ```bash
+# Install dependencies
 bun install
+
+# Run tests
 bun run test
 
+# Build the package so that example projects
+# could use the local build
+bun run build
+
+# Register this package locally for development
+bun link
+
+# Check whether the local package is linked
+bun pm ls vite-plugin-comment-attrs
+
+# Install and link dependencies for the React example
+bun install:react
+
+# Run the React example
 bun dev:react
+
+# Install and link dependencies for the Solid example
+bun install:solid
+
+# Run the Solid example
 bun dev:solid
 
-bun run build
 ```
 
 ### Tests

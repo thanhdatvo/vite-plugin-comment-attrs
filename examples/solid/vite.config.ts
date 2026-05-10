@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
-import { commentAttrsPlugin } from "../../src";
+import { commentAttrsPlugin } from "vite-plugin-comment-attrs";
 
 export default defineConfig({
   plugins: [
