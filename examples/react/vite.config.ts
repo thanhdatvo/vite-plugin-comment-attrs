@@ -1,48 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "node:path";
-import { pathToFileURL, fileURLToPath } from "node:url";
+import { commentAttrsPlugin } from "vite-plugin-comment-attrs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const localPluginPath = path.resolve(__dirname, "../../src/index.ts");
-
-const isStackBlitz = process.env.STACKBLITZ === "true";
-
-function logPlugin(message: string) {
-  const time = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  }).format(new Date());
-
-  const prefix = "\x1b[1m\x1b[36m[vite-plugin-comment-attrs]\x1b[0m";
-
-  console.log(`${time} ${prefix} ${message}`);
-}
-
-export default defineConfig(async () => {
-  const pluginImportPath = isStackBlitz
-    ? "vite-plugin-comment-attrs"
-    : pathToFileURL(localPluginPath).href;
-
-  const pluginModule = await import(/* @vite-ignore */ pluginImportPath);
-
-  logPlugin(
-    `using ${isStackBlitz ? "npm package" : "local source"}: ${
-      isStackBlitz ? "vite-plugin-comment-attrs" : localPluginPath
-    }`,
-  );
-  return {
-    plugins: [
-      pluginModule.commentAttrsPlugin({
-        directives: {
-          "@class": { attr: "className", merge: "append" },
-          "@id": { attr: "id", merge: "replace" },
-          "@alt": { attr: "alt", merge: "replace" },
-        },
-      }),
-      react(),
-    ],
-  };
+export default defineConfig({
+  plugins: [
+    commentAttrsPlugin({
+      directives: {
+        "@class": { attr: "class", merge: "append" },
+        "@id": { attr: "id", merge: "replace" },
+        "@alt": { attr: "alt", merge: "replace" },
+      },
+    }),
+    react(),
+  ],
 });
