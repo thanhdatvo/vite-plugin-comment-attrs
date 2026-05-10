@@ -7,10 +7,10 @@ bun dev
 
 ## Usage:
 
-In `main.tsx`, switch between the following imports to
+In `index.tsx`, switch between the following imports to
 verify that the rendered output remains unchanged
 
 ```tsx
-import App from "./App.after.tsx";
-// import App from "./App.before.tsx";
+import App from "./app.after.tsx";
+// import App from "./app.before.tsx";
 ```

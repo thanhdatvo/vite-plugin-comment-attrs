@@ -48,8 +48,8 @@ This is useful when you want to test new classes, IDs, labels, or other attribut
 
 ## Try it online
 
-- <a href="https://stackblitz.com/github/thanhdatvo/vite-plugin-comment-attrs/tree/main/examples/react" target="_blank" rel="noopener noreferrer">React playground</a>
-- <a href="https://stackblitz.com/github/thanhdatvo/vite-plugin-comment-attrs/tree/main/examples/solid" target="_blank" rel="noopener noreferrer">Solid playground</a>
+- <a href="https://stackblitz.com/github/thanhdatvo/vite-plugin-comment-attrs/tree/main/examples/react?file=src%2FApp.after.tsx" target="_blank" rel="noopener noreferrer">React playground</a>
+- <a href="https://stackblitz.com/github/thanhdatvo/vite-plugin-comment-attrs/tree/main/examples/solid?file=src%2Fapp.after.tsx" target="_blank" rel="noopener noreferrer">Solid playground</a>
 
 ---
 
