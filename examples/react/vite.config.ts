@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { existsSync } from "node:fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,15 +22,18 @@ function logPlugin(message: string) {
 }
 
 export default defineConfig(async () => {
-  const pluginModule = useLocalPlugin
-    ? await import("../../src/index")
-    : await import("vite-plugin-comment-attrs");
+  const pluginImportPath = useLocalPlugin
+    ? pathToFileURL(localPluginPath).href
+    : "vite-plugin-comment-attrs";
+
+  const pluginModule = await import(/* @vite-ignore */ pluginImportPath);
 
   logPlugin(
     `using ${useLocalPlugin ? "local source" : "npm package"}: ${
       useLocalPlugin ? localPluginPath : "vite-plugin-comment-attrs"
     }`,
   );
+
   return {
     plugins: [
       pluginModule.commentAttrsPlugin({
