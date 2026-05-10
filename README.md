@@ -226,7 +226,7 @@ git clone https://github.com/thanhdatvo/vite-plugin-comment-attrs.git
 cd vite-plugin-comment-attrs
 ```
 
-- Install dependencies and test
+- Install dependencies, run test and build the package
 
 ```sh
 bun install
